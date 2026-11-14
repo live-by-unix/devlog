@@ -13,8 +13,9 @@ if [ ! -f .env ]; then
 fi
 
 export NODE_ENV=production
-PORT="${PORT:-3001}"
-HOST="${HOST:-0.0.0.0}"
+# Explicit env vars win; otherwise config.ts/dotenv resolves PORT/HOST from .env
+[ -n "${PORT:-}" ] && export PORT
+[ -n "${HOST:-}" ] && export HOST
 PIDFILE=.devlog-prod.pid
 if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
   echo "Devlog already running (pid $(cat "$PIDFILE")). Run ./stop-prod.sh first." >&2
@@ -29,5 +30,7 @@ if ! kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
   rm -f "$PIDFILE"
   exit 1
 fi
-echo "Devlog running at http://${HOST}:${PORT} (pid $(cat "$PIDFILE"))"
+ENV_PORT=$(grep -E '^PORT=' .env 2>/dev/null | head -1 | cut -d= -f2)
+ENV_HOST=$(grep -E '^HOST=' .env 2>/dev/null | head -1 | cut -d= -f2)
+echo "Devlog running at http://${HOST:-${ENV_HOST:-127.0.0.1}}:${PORT:-${ENV_PORT:-3001}} (pid $(cat "$PIDFILE"))"
 echo "Logs: logs/prod.log"

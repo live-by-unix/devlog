@@ -47,10 +47,14 @@ if [ "$MODE" = "production" ]; then
   log "Starting Devlog in PRODUCTION mode"
   export NODE_ENV=production
   npm run build --workspace @devlog/server --if-present || true
-  PORT="${PORT:-3001}" HOST="${HOST:-0.0.0.0}" node apps/server/dist/index.js &
+  # Explicit env vars win; otherwise config.ts/dotenv resolves PORT/HOST from .env
+  [ -n "${PORT:-}" ] && export PORT
+  [ -n "${HOST:-}" ] && export HOST
+  node apps/server/dist/index.js &
   echo $! > "$PIDFILE"
   sleep 1
-  log "Devlog is running at http://localhost:${PORT:-3001}"
+  ENV_PORT=$(grep -E '^PORT=' .env 2>/dev/null | head -1 | cut -d= -f2)
+  log "Devlog is running at http://localhost:${PORT:-${ENV_PORT:-3001}}"
 else
   log "Starting Devlog in DEVELOPMENT mode"
   # Build shared package types once, then run API + Vite dev server
