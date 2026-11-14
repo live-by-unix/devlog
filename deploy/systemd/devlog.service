@@ -1,0 +1,23 @@
+[Unit]
+Description=Devlog — self-hosted project publishing platform
+After=network.target
+
+[Service]
+Type=simple
+User=devlog
+Group=devlog
+WorkingDirectory=__APP_DIR__
+EnvironmentFile=__APP_DIR__/.env
+ExecStart=/usr/bin/node __APP_DIR__/apps/server/dist/index.js
+Restart=always
+RestartSec=3
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=__DATA_DIR__ __APP_DIR__/logs
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

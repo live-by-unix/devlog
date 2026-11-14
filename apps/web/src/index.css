@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { @apply antialiased; }
+  body { @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100; }
+  ::selection { @apply bg-brand-500/30; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-500; }
+  .btn-secondary { @apply btn bg-zinc-200 text-zinc-900 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700; }
+  .btn-ghost { @apply btn text-zinc-700 hover:bg-zinc-200 dark:text-zinc-300 dark:hover:bg-zinc-800; }
+  .btn-danger { @apply btn bg-red-600 text-white hover:bg-red-500; }
+  .btn-outline { @apply btn border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800; }
+  .input {
+    @apply w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100;
+  }
+  .label { @apply mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300; }
+  .card { @apply rounded-2xl border border-zinc-200 bg-white shadow-card dark:border-zinc-800 dark:bg-zinc-900; }
+  .badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium; }
+}
+
+/* Markdown content styling */
+.md-body { @apply text-[15px] leading-relaxed text-zinc-800 dark:text-zinc-200; }
+.md-body > *:first-child { @apply mt-0; }
+.md-body h1 { @apply mt-6 mb-3 text-2xl font-bold; }
+.md-body h2 { @apply mt-6 mb-3 text-xl font-semibold; }
+.md-body h3 { @apply mt-5 mb-2 text-lg font-semibold; }
+.md-body p { @apply my-3; }
+.md-body a { @apply text-brand-600 underline dark:text-brand-400; }
+.md-body ul { @apply my-3 list-disc pl-6; }
+.md-body ol { @apply my-3 list-decimal pl-6; }
+.md-body blockquote { @apply my-3 border-l-4 border-zinc-300 pl-4 italic text-zinc-600 dark:border-zinc-700 dark:text-zinc-400; }
+.md-body code { @apply rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[13px] dark:bg-zinc-800; }
+.md-body pre { @apply my-4 overflow-x-auto rounded-xl bg-zinc-900 p-4 text-zinc-100 dark:bg-black; }
+.md-body pre code { @apply bg-transparent p-0 text-inherit; }
+.md-body table { @apply my-4 w-full border-collapse text-sm; }
+.md-body th, .md-body td { @apply border border-zinc-300 px-3 py-2 text-left dark:border-zinc-700; }
+.md-body th { @apply bg-zinc-100 dark:bg-zinc-800; }
+.md-body hr { @apply my-6 border-zinc-200 dark:border-zinc-800; }
+.md-body img { @apply my-4 max-w-full rounded-lg; }
+.md-body del { @apply line-through; }

@@ -1,0 +1,32 @@
+services:
+  devlog:
+    build: .
+    image: devlog:latest
+    container_name: devlog
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      PORT: "3001"
+      HOST: 0.0.0.0
+      DATA_DIR: /app/data
+      # REQUIRED: set a long random secret. Generate:
+      #   node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env or environment}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      TRUST_PROXY: ${TRUST_PROXY:-1}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-100}
+      MAX_IMAGE_MB: ${MAX_IMAGE_MB:-5}
+    volumes:
+      - devlog-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  devlog-data:
