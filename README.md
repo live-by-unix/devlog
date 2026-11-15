@@ -22,7 +22,7 @@ Devlog is a complete, self-hostable publishing platform for a single software pr
 ## Quick start (development)
 
 ```bash
-git clone <repo> devlog && cd devlog
+git clone https://github.com/live-by-unix/devlog && cd devlog
 ./start.sh        # installs deps, starts API (:3001) + Vite (:5173)
 ./stop.sh         # stops dev processes
 ```
